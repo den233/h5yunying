@@ -11,11 +11,13 @@
 		}
 	}
 </script>
-
 <style>
+	  @import 'https://at.alicdn.com/t/font_1071536_eyb9yhkwgbd.css';
+</style>
+<style lang="scss">
 	/* 头条小程序需要把 iconfont 样式放到组件外 */
-	@import "components/m-icon/m-icon.css";
-
+	/* @import "components/m-icon/m-icon.css"; */
+@import "static/scss/common.scss";
 	/*每个页面公共css */
 	page {
 		min-height: 100%;
@@ -64,7 +66,7 @@
 		display: flex;
 		flex: 1;
 		flex-direction: column;
-		background-color: #fda594;
+		
 		
 	}
 	
@@ -103,7 +105,10 @@
 	}
 
 	button.primary {
-		background-color: #FF3928;
-		padding: 4px;
+		background-color: $btnColr;
+		color: #fff;
+	}
+	button.primary[disabled] {
+		background-color: $disableColor;
 	}
 </style>

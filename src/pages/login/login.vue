@@ -1,5 +1,5 @@
 <template>
-    <view class="content">
+    <view class="content" :style="{'background-color':background}">
         <view  style="padding-bottom:50px;">
             <image mode="widthFix" class="bannerimg" :src="bannerimg"></image>
             <view v-if="isLogin" class="detail-page" >
@@ -8,7 +8,7 @@
                      优惠券已经放入：151888888
                  </view>
                  <view >
-                    <button class="getcode" disabled="true" type="primary"   @tap="bindLogin">立即领取</button>
+                    <button class="getcode" disabled="false" type="primary"   @tap="bindLogin">立即使用</button>
                 </view>
             </view>
             <view v-else class="login-page">
@@ -20,14 +20,14 @@
                 <view class="input-row">
                     <image class="icon" :src="codeimg"></image>
                     <m-input class="input2" type="password" displayable v-model="password" placeholder="请输入验证码"></m-input>
-                     <button class="btncode" type="primary" disabled="true">获取验证码</button>
+                     <button @click="openPopup" class="btncode primary" type="primary" :disabled="!authCodeAllowed">{{codeMsg}}</button>
                 </view>
                 </view>
                 <view class="btn-row">
-                    <button  disabled="true" type="primary" class="primary loginbutton" @tap="bindLogin">立即领取</button>
+                    <button  :disabled="!validate" type="primary" class="primary loginbutton" @click.native="bindLogin">立即领取</button>
                 </view>
             </view>
-            
+             
             <view class="products">
                 <view class="item">
                     <image mode="widthFix" class="pimg" :src="goodsimg"></image>
@@ -41,6 +41,7 @@
         <view class="footer">
               <image mode="widthFix" class="download" :src="downloadimg"></image>
         </view>
+				<uni-popup ref="popup" @closePopup="closePopup" type="middle">底部弹出 Popup</uni-popup>
     </view>
 </template>
 
@@ -53,6 +54,7 @@
     } from 'vuex'
     import mInput from '../../components/m-input.vue'
     import uniPopup from "../../../common/uni-popup/uni-popup.vue"
+		 import {validatePhone} from '../../static/js/validate.js'
     export default {
         components: {
             mInput,
@@ -67,6 +69,7 @@
                 hasProvider: false,
                 account: '',
                 password: '',
+								validate:false,
                 positionTop: 0,
                 bannerimg:'../../static/img/bg.png',
                 phoneimg:'../../static/img/h5/mobile.png',
@@ -84,9 +87,26 @@
                 }
                 ],
                 gonggao:'../../static/img/h5/gonggao.png',
-                isLogin:false
+                isLogin:false,
+								background:"#fda594",
+								authCodeAllowed:true,
+								codeMsg:'获取验证码',
+								tick:60
             }
         },
+				watch:{
+					account(value){
+						let _this=this;
+						_this.validate==true
+						if(!validatePhone(value)){
+							console.log(value)
+							_this.validate=false
+						}else{
+							_this.validate=true
+						}
+						// validatePhone(value)?"this.validta==true":"this.validta==false"
+					}
+				},
         computed: mapState(['forcedLogin']),
         methods: {
             ...mapMutations(['login']),
@@ -119,24 +139,50 @@
                  */
                 this.positionTop = uni.getSystemInfoSync().windowHeight - 100;
             },
+						closePopup(){
+							this.authCodeAllowed = false;
+							this.tick = 60;
+							this.codeMsg=`${this.tick}秒后获取`
+							let internal = setInterval(() => {
+								this.tick = this.tick - 1;
+								this.codeMsg=`${this.tick}秒后获取`
+								if (this.tick == 0) {
+									this.authCodeAllowed = true;
+									this.codeMsg="获取验证码"
+									clearInterval(internal);
+								}
+							}, 1000);
+						},
+						 openPopup(){
+							 if (!validatePhone(this.account)) {
+									 uni.showToast({
+									 			icon: 'none',
+									 			title: '请输入正确的手机号码'
+									 	})
+									return false
+								}
+							  
+								this.$refs.popup.open()
+						},
             bindLogin() {
+						
                 /**
                  * 客户端对账号信息进行一些必要的校验。
                  * 实际开发中，根据业务需要进行处理，这里仅做示例。
                  */
                 this.$api.test({noncestr: Date.now()}).then((res)=>{
-					this.loading = false;
-					console.log('request success', res)
-					uni.showToast({
-						title: '请求成功',
-						icon: 'success',
-						mask: true
-					});
-					this.res = '请求结果 : ' + JSON.stringify(res);
-				}).catch((err)=>{
-					this.loading = false;
-					console.log('request fail', err);
-				})
+									this.loading = false;
+									console.log('request success', res)
+									uni.showToast({
+										title: '请求成功',
+										icon: 'success',
+										mask: true
+									});
+									this.res = '请求结果 : ' + JSON.stringify(res);
+								}).catch((err)=>{
+									this.loading = false;
+									console.log('request fail', err);
+								})
                 this.isLogin=true;
                 if (this.account.length < 5) {
                     uni.showToast({
@@ -210,7 +256,7 @@
             }
         },
         onLoad(){
-            alert(1)
+            alert(this.positionTop)
            
         },
         onReady() {
@@ -234,42 +280,12 @@
         justify-content: center;
     }
 
-    .action-row navigator {
-        color: #007aff;
-        padding: 0 10px;
-    }
-
-    .oauth-row {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-    }
-
-    .oauth-image {
-        width: 50px;
-        height: 50px;
-        border: 1px solid #dddddd;
-        border-radius: 50px;
-        margin: 0 20px;
-        background-color: #ffffff;
-    }
-
-    .oauth-image image {
-        width: 30px;
-        height: 30px;
-        margin: 10px;
-    }
+ 
     .account{
         text-align: center;
         padding-bottom: 20px;
     }
-    button{
-        color:#fff;
-    }
+    
     .detail-page{
         padding-left:10px;
         background: #ffe2de;
@@ -286,8 +302,7 @@
         width:100%;
         padding-bottom:20px;
     }
-     .btncode[disabled]{
-        background-color: #fc8988;
+     .btncode{
         position: absolute;
         right: 20px;
         top:9px;
@@ -296,9 +311,6 @@
         font-size:13px;
     }
     
-    .loginbutton[disabled][type=primary]{
-         background-color: #fc8988;
-    }
     .products{
         padding: 40px 10px 10px;
     }

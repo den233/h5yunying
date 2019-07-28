@@ -3,7 +3,8 @@ import App from './App'
 
 import store from './store'
 import api from '../common/vmeitime-http/'
-
+import FastClick from 'fastclick'
+FastClick.attach(document.body);
 // 全局挂载后使用
 Vue.prototype.$api = api
 Vue.config.productionTip = false
