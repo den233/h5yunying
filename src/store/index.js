@@ -10,7 +10,9 @@ const store = new Vuex.Store({
          */
         forcedLogin: false,
         hasLogin: false,
-        userName: ""
+        userName: "",
+        aaa:"production development zhengshi",
+        env:'production'
     },
     mutations: {
         login(state, userName) {

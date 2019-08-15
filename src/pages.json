@@ -3,30 +3,10 @@
         {
             "path": "pages/login/login",
             "style": {
-                "navigationStyle":"custom"
-            }
-        }, {
-            "path": "pages/login/login",
-            "style": {
                 "navigationStyle":"custom",
-                "navigationBarTitleText": "登录"
+                "navigationBarTitleText": "99元新人礼包免费送"
             }
-        }, {
-            "path": "pages/reg/reg",
-            "style": {
-                "navigationBarTitleText": "注册"
-            }
-        }, {
-            "path": "pages/pwd/pwd",
-            "style": {
-                "navigationBarTitleText": "找回密码"
-            }
-        }, {
-            "path": "pages/user/user",
-            "style": {
-                "navigationBarTitleText": "我的"
-            }
-        }
+        } 
     ],
     "tabBar": {
         "color": "#7a7e83",

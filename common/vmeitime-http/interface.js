@@ -29,12 +29,26 @@ http.delete('user/1').then((res)=>{
 }) 
 
 */
+import store from '../../src/store'
+var baseUrl=""
+//测试发布
+if(store.state.env=="production"){
+	baseUrl="http://ceodemo.hotkidclub.com/ceo/mi-api/ceo/c/user"
+}
+//正式发布
+if(store.state.env=="zhengshi"){
+	baseUrl="http://www.hotkidclub.com/api"
+}
+//开发环境
+if(process.env.NODE_ENV=="development"){
+	baseUrl="http://localhost:8000/api"
+}
 export default {
 	config: {
-		baseUrl: "https://unidemo.dcloud.net.cn/",
+		baseUrl: baseUrl,
 		header: {
-			'Content-Type':'application/json;charset=UTF-8',
-			'Content-Type':'application/x-www-form-urlencoded'
+			'Content-Type':'application/json;charset=UTF-8'
+			//'Content-Type':'application/x-www-form-urlencoded'
 		},  
 		data: {},
 		method: "GET",
@@ -70,11 +84,12 @@ export default {
 			let _config = null
 			
 			options.complete = (response) => {
+				//console.log('ii',response)
 				let statusCode = response.statusCode
 				response.config = _config
 				if (process.env.NODE_ENV === 'development') {
 					if (statusCode === 200) {
-						console.log("【" + _config.requestId + "】 结果：" + JSON.stringify(response.data))
+						//console.log("【" + _config.requestId + "】 结果：" + JSON.stringify(response.data))
 					}
 				}
 				if (this.interceptor.response) {
@@ -86,7 +101,12 @@ export default {
 				// 统一的响应日志记录
 				_reslog(response)
 				if (statusCode === 200) { //成功
-					resolve(response);
+					if(response.data.Response){
+						resolve(response.data.Response);
+					}else{
+						resolve(response);
+					}
+					
 				} else {
 					reject(response)
 				}
@@ -170,11 +190,11 @@ function _reqlog(req) {
 function _reslog(res) {
 	let _statusCode = res.statusCode;
 	if (process.env.NODE_ENV === 'development') {
-		console.log("【" + res.config.requestId + "】 地址：" + res.config.url)
+		//console.log("【" + res.config.requestId + "】 地址：" + res.config.url)
 		if (res.config.data) {
-			console.log("【" + res.config.requestId + "】 请求参数：" + JSON.stringify(res.config.data))
+			//console.log("【" + res.config.requestId + "】 请求参数：" + JSON.stringify(res.config.data))
 		}
-		console.log("【" + res.config.requestId + "】 响应结果：" + JSON.stringify(res))
+		//console.log("【" + res.config.requestId + "】 响应结果：" + JSON.stringify(res))
 	}
 	//TODO 除了接口服务错误外，其他日志调接口异步写入日志数据库
 	switch(_statusCode){

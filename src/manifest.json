@@ -1,7 +1,7 @@
 {
-    "name" : "login-template",
+    "name" : "99元新人礼包免费送",
     "appid" : "__UNI__5430F3F",
-    "description": "登录模板",
+    "description": "99元新人礼包免费送",
     "versionName": "1.0.0",
     "versionCode": "100",
 	"transformPx": false,
@@ -51,18 +51,29 @@
 	    "usingComponents" : true
 	},
 	"h5" : {
+        "router":{
+            "base":"/ceo/campaign/",
+             "mode":"history"
+        },
+        
+        "publicPath":"./",
+       
         "devServer" : {
+            "host":"0.0.0.0",
             "port" : 8000,
             "disableHostCheck" : true,
 			
             "proxy" : {
                 "/api" : {
-                    "target" : "https://testapi.kemiandan.com",
+                    "targettest" : "http://qa.hotkidclub.com/",
+                    "target" : "http://qa.hotkidclub.com/",
                     "changeOrigin" : true,
-                    "secure" : false,
-                    "pathRewrite" : {
-                        "^/api" : ""
-                    }
+                    "secure" : false
+                },
+                "/ceo" : {
+                    "target" : "http://ceodemo.hotkidclub.com/ceo/mi-api",
+                    "changeOrigin" : true,
+                    "secure" : false
                 }
             }
         }

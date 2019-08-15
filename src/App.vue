@@ -4,7 +4,7 @@
 			console.log('App Launch');
 		},
 		onShow: function() {
-			console.log('App Show');
+			console.log(process.env);
 		},
 		onHide: function() {
 			console.log('App Hide');
@@ -101,7 +101,7 @@
 	} */
 
 	.btn-row {
-		padding: 0 10px;
+		padding: 0 45px;
 	}
 
 	button.primary {
@@ -110,5 +110,9 @@
 	}
 	button.primary[disabled] {
 		background-color: $disableColor;
+		color:$disablefont;
+	}
+	uni-button:after{
+		border:none;
 	}
 </style>

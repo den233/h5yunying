@@ -6,6 +6,7 @@
     "serve": "npm run dev:h5",
     "build": "npm run build:h5",
     "build:app-plus": "cross-env NODE_ENV=production UNI_PLATFORM=app-plus vue-cli-service uni-build",
+    "buildzhengshi:h5": "cross-env uni_fabu=zhengshi NODE_ENV=zhengshi UNI_PLATFORM=h5 vue-cli-service uni-build",
     "build:h5": "cross-env NODE_ENV=production UNI_PLATFORM=h5 vue-cli-service uni-build",
     "build:mp-alipay": "cross-env NODE_ENV=production UNI_PLATFORM=mp-alipay vue-cli-service uni-build",
     "build:mp-baidu": "cross-env NODE_ENV=production UNI_PLATFORM=mp-baidu vue-cli-service uni-build",
@@ -29,11 +30,14 @@
     "@dcloudio/uni-mp-qq": "*",
     "@dcloudio/uni-mp-toutiao": "*",
     "@dcloudio/uni-mp-weixin": "*",
+    "axios": "^0.19.0",
+    "fastclick": "^1.0.6",
     "flyio": "^0.6.2",
     "regenerator-runtime": "^0.12.1",
+    "vconsole": "^3.3.2",
     "vue": "^2.6.10",
     "vuex": "^3.0.1",
-		"fastclick": "^1.0.6"
+    "weixin-js-sdk": "^1.4.0-test"
   },
   "devDependencies": {
     "@dcloudio/uni-cli-shared": "*",

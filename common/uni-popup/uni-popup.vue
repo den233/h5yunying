@@ -8,7 +8,7 @@
 			</view>
 			
 			<view>
-				<input v-model="checkcodes" class="uni-input" focus placeholder="输入验证码" />
+				<input maxlength="4" v-model="checkcodes" class="uni-input needsclick"  placeholder="输入验证码" />
 				<view @click="changeCode">
 					<text :style="{color:code.color}" v-for="(code,index) in codeArray" :key="index">
 						{{code.name}}
@@ -44,6 +44,10 @@
 			custom: {
 				type: Boolean,
 				default: false
+			},
+			account:{
+				type: String,
+				default: ''	
 			},
 			// maskClick
 			maskClick: {
@@ -119,20 +123,24 @@
 			clear() {},
 			submitCode(){
 				   if(this.checkcodes.toLowerCase()!=this.code1.toLowerCase()){
+             console.log(222)
 						 uni.showToast({
-						 		icon: 'none',
+						 		 icon:'none',
 						 		title: '请输入正确的验证码'
 						 })
 						 return false;
 					 }
 					 this.loading=true
 					 this.disabled=true
-					 this.$api.test({noncestr: Date.now()}).then((res)=>{
+					 this.$api.sendCode({
+						 "mobileNumber": this.account,
+    					 "type": 2
+					 }).then((res)=>{
 					 	this.loading = false;
 						this.checkcodes=""
-					 	console.log('request success', res)
+					 	 
 					 	uni.showToast({
-					 		title: '请求成功',
+					 		title: res.sub_msg,
 					 		icon: 'success',
 					 		mask: true
 					 	});
@@ -204,7 +212,7 @@
 		bottom: 0;
 		left: 0;
 		right: 0;
-		z-index: 99999;
+		z-index: 101;
 		overflow: hidden;
 		background: rgba(0,0,0,0.5);
 		
@@ -213,6 +221,8 @@
 			padding-top:30px;
 			border-radius:10px;
 			box-shadow: 1px 1px 1px #eee;
+      top: 50%;
+      margin-top: -100px;
 		}
 				.uni-input{
 						float: left;
@@ -228,7 +238,7 @@
 			bottom: 0;
 			left: 0;
 			right: 0;
-			z-index: 998;
+			z-index: 100;
 			background: rgba(255, 255, 255, 1);
 			opacity: 0;
 
