@@ -53,7 +53,7 @@ if(store.state.env=="production"){
 if(store.state.env=="zhengshi"){
 	loginPort="http://www.hotkidclub.com/api"
 }
-let loginurl=(store.state.env=="development"||store.state.env=="zhengshi")?'/member/registerOrLogin.ctrl':'/user/registerOrLogin.ctrl'
+let loginurl=(store.state.env=="development"||store.state.env=="zhengshi")?'/member/registerOrLogin.ctrl':'/ceo/user/registerOrLoginForClub'
 export const loginbycode = (data) => {
 	
     return http.request({

@@ -1,12 +1,12 @@
 <template>
     <view class="content" >
          
-        <view  style="padding-bottom:60px">
-          
-            <image v-if="isLogin" onclick="return false" mode="widthFix" class="bannerimg image-no" :src="bannerimg1"></image>
+        <view  style="padding-bottom:50px">
+           <view style="position:relative">
+                <image v-if="isLogin" onclick="return false" mode="widthFix" class="bannerimg image-no" :src="bannerimg1"></image>
               <image v-else onclick="return false" mode="widthFix" class="bannerimg image-no" :src="bannerimg"></image>
             <view v-if="isLogin" class="detail-page" >
-                <view style="position:relative;" v-for="(item,index) in rewardList" :key="index">
+                <!-- <view style="position:relative;" v-for="(item,index) in rewardList" :key="index">
                      <image mode="widthFix" onclick="return false"  class="qimg image-no" :src="item.img"></image>
                     <view class="discounts">
                         <text>{{item.name}}</text>
@@ -14,7 +14,7 @@
                          <text>减</text>
                            <text class="big">{{item.discount}}</text>
                     </view>
-                </view>
+                </view> -->
                
                  <view class="account">
                     券已放入账号：{{mobileNo}}
@@ -31,7 +31,7 @@
                 </view>
                 <view class="input-row">
                     <image  class="icon image-no" :src="codeimg"></image>
-                    <m-input  maxlength="4" class="input2" type="password" displayable v-model="password" placeholder="请输入验证码"></m-input>
+                    <m-input style="margin-bottom:5px;" maxlength="4" class="input2" type="password" displayable v-model="password" placeholder="请输入验证码"></m-input>
                      <button @click="openPopup" class="btncode primary" type="primary" :disabled="!authCodeAllowed">{{codeMsg}}</button>
                 </view>
                 </view>
@@ -39,6 +39,8 @@
                     <button  :disabled="!validate||(password.length!=4)" type="primary" class="primary loginbutton" @click="bindLogin"></button>
                 </view>
             </view>
+           </view>
+            
              
             <view class="products">
                 <view class="item">
@@ -443,9 +445,10 @@
 }
     .login-page{
         position: absolute;
-        bottom:-21px;
+        bottom:15px;
         left: 0;
         right: 0;
+        z-index: 30;
     }
      
     
@@ -466,7 +469,7 @@
         width:24px;
         height:24px;
         left: 36px;
-        top: 15px;
+        top: 11px;
     }
     .action-row {
         display: flex;
@@ -483,22 +486,22 @@
     
     .detail-page{
         position: absolute;
-        bottom: -53px;
-        z-index: 99;
+        bottom: 0;
+        z-index: 24;
         left: 0;
         right: 0;
     }
     .detail-page .getcode[disabled],.login-page .loginbutton[disabled]{
-        background:url('../../static/img/v1/button_un@3x.png');
+        background:url('../../static/img/v1/button_un@3x.png') no-repeat;
         
     }
     .detail-page .getcode,.login-page  .loginbutton{
-         padding-left:45px;
-        padding-right: 45px;
         width: 100%;
-        height: 75px;
+        margin: 0 auto;
+        max-width: 280px;
+        height: 65px;
         background-size: cover!important;
-        background:url('../../static/img/v1/botton@3x.png');
+        background:url('../../static/img/v1/botton@3x.png') no-repeat;
     }
     .qimg{
         width:100%;
@@ -508,7 +511,7 @@
      .btncode{
         position: absolute;
         right: 33px;
-        top:9px;
+        top:6px;
         border-radius: 23px;
         padding: 0 10px;
         font-size:13px;

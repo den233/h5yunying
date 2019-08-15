@@ -126,7 +126,7 @@
 		min-height: 100%;
 		line-height: 40px;
 		background-color: #fff;
-		height:50px;
+		height:45px;
 		border-radius:25px;
 		padding-left:50px;
 		

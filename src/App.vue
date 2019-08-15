@@ -101,7 +101,7 @@
 	} */
 
 	.btn-row {
-		padding: 0 45px;
+		padding:0;
 	}
 
 	button.primary {
