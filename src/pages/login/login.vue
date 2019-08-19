@@ -133,7 +133,7 @@
 				validate:false,
                 positionTop: 0,
                 bannerimg:'../../static/img/v1/unit1@3x.jpg',
-                bannerimg1:'../../static/img/v1/unit1_conpous@3x.jpg',
+                bannerimg1:'../../static/img/v1/unit1_coupons@3x.jpg',
                 phoneimg:'../../static/img/v1/phone@3x.png',
                 codeimg:'../../static/img/v1/mail@3x.png',
                 goodsimg:'../../static/img/v1/unit2@3x.jpg',
@@ -445,7 +445,7 @@
 }
     .login-page{
         position: absolute;
-        bottom:15px;
+        bottom:-35px;
         left: 0;
         right: 0;
         z-index: 30;
@@ -486,7 +486,7 @@
     
     .detail-page{
         position: absolute;
-        bottom: 0;
+        bottom: -50px;
         z-index: 24;
         left: 0;
         right: 0;
@@ -501,7 +501,14 @@
         max-width: 280px;
         height: 65px;
         background-size: cover!important;
-        background:url('../../static/img/v1/botton@3x.png') no-repeat;
+        
+    }
+    .detail-page .getcode{
+         background:url('../../static/img/v1/botton@3x.png') no-repeat;
+    }
+    .login-page .loginbutton{
+         background:url('../../static/img/v1/botton_get@3x.png') no-repeat;
+        
     }
     .qimg{
         width:100%;
@@ -522,6 +529,7 @@
         width:100%;
         height:581px;
         vertical-align: top;
+        margin-top:-3px;
     }
     .products {
         .guize{
